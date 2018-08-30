@@ -1,5 +1,6 @@
 package com.race604.waveloading;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import com.race604.drawable.wave.WaveDrawable;
+import com.race604.drawable.wave.WaveDrawable2;
+import com.race604.drawable.wave.WaveDrawable3;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +22,17 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar mSpeedSeekBar;
     private SeekBar mLengthSeekBar;
     private RadioGroup mRadioGroup;
+    private WaveDrawable2 waveDrawable2;
+    WaveDrawable3 colorWave3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        waveDrawable2 = new WaveDrawable2(Color.BLUE);
+        findViewById(R.id.activity_main).setBackground(waveDrawable2);
+        waveDrawable2.setProgress(0.5f);
 
         mImageView = (ImageView) findViewById(R.id.image);
         mWaveDrawable = new WaveDrawable(this, R.drawable.android_robot);
@@ -34,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mWaveDrawable.setLevel(progress);
+                waveDrawable2.setProgress((float)progress / seekBar.getMax());
+                colorWave3.setProgress((float)progress / seekBar.getMax());
             }
         });
 
@@ -42,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mWaveDrawable.setWaveAmplitude(progress);
+                waveDrawable2.setWaveAmplitude(progress);
             }
         });
 
@@ -50,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mWaveDrawable.setWaveLength(progress);
+                waveDrawable2.setWaveLength(progress);
             }
         });
 
@@ -58,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mWaveDrawable.setWaveSpeed(progress);
+                waveDrawable2.setWaveSpeed(progress);
             }
         });
 
@@ -89,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
         WaveDrawable colorWave = new WaveDrawable(new ColorDrawable(color));
         view.setBackground(colorWave);
         colorWave.setIndeterminate(true);
+
+        View view1 = findViewById(R.id.view1);
+        colorWave3 = new WaveDrawable3(color);
+        view1.setBackground(colorWave3);
 
     }
 
